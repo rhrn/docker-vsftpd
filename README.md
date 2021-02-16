@@ -7,6 +7,11 @@
 docker run --rm -e PASSWORD=FSBhuNOR -p 21000:21 -p 20000:20000 rhrn/vsftpd:latest
 ```
 
+* test server with optional SSL via command line
+```
+docker run --rm -e PASSWORD=FSBhuNOR -e FORCE_SSL=NO -p 21000:21 -p 20000:20000 rhrn/vsftpd:latest
+```
+
 * push file
 ```
 touch test.txt

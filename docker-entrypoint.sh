@@ -8,6 +8,14 @@ cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.custom.conf
 
 sed -i "s/anonymous_enable=YES/anonymous_enable=NO/" /etc/vsftpd/vsftpd.custom.conf
 
+FORCE_LOCAL_DATA_SSL=YES
+FORCE_LOCAL_LOGINS_SSL=YES
+
+if [[ "${FORCE_SSL}" == "NO" ]]; then
+  FORCE_LOCAL_DATA_SSL=NO
+  FORCE_LOCAL_LOGINS_SSL=NO
+fi
+
 cat <<EOF >> /etc/vsftpd/vsftpd.custom.conf
 ssl_enable=YES
 rsa_cert_file=/etc/vsftpd/vsftpd.pem
@@ -15,8 +23,8 @@ ssl_tlsv1=YES
 ssl_sslv2=NO
 ssl_sslv3=NO
 ssl_ciphers=HIGH
-force_local_data_ssl=YES
-force_local_logins_ssl=YES
+force_local_data_ssl=$FORCE_LOCAL_DATA_SSL
+force_local_logins_ssl=$FORCE_LOCAL_LOGINS_SSL
 allow_anon_ssl=NO
 require_ssl_reuse=NO
 seccomp_sandbox=NO
